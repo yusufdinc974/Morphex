@@ -75,53 +75,248 @@
             opacity: 0.7;
         }
 
-        /* Loading Screen */
+        /* Loading Screen Enhanced */
         .loading-screen {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, var(--primary-dark), #1a1f3a);
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #1a1f3a 50%, var(--primary-dark) 100%);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 10000;
-            transition: opacity 1s ease-out;
+            transition: opacity 1.5s ease-out;
+            overflow: hidden;
         }
 
         .loading-content {
             text-align: center;
+            position: relative;
+            z-index: 2;
         }
 
         .loading-logo {
-            font-size: 3rem;
-            font-weight: 700;
-            background: linear-gradient(45deg, var(--accent-blue), var(--accent-purple), var(--gold));
+            font-size: 4rem;
+            font-weight: 900;
+            letter-spacing: 0.5rem;
+            background: linear-gradient(45deg, var(--accent-blue), var(--accent-purple), var(--gold), var(--accent-blue));
+            background-size: 400% 400%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 2rem;
-            animation: pulse 2s infinite;
+            margin-bottom: 3rem;
+            animation: morphixGlow 3s ease-in-out infinite, gradientShift 4s ease-in-out infinite;
+            position: relative;
+            text-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
         }
 
-        .loading-bar {
-            width: 300px;
-            height: 4px;
+        .loading-logo::before {
+            content: 'MORPHIX';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 2s ease-in-out infinite;
+        }
+
+        .loading-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 3rem;
+            letter-spacing: 0.2rem;
+            animation: fadeInOut 2s ease-in-out infinite alternate;
+        }
+
+        .loading-bar-container {
+            width: 400px;
+            height: 8px;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 2px;
+            border-radius: 10px;
             overflow: hidden;
-            margin: 0 auto;
+            margin: 0 auto 2rem;
+            position: relative;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .loading-progress {
             height: 100%;
-            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
-            animation: loading 3s ease-out forwards;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple), var(--gold), var(--accent-blue));
+            background-size: 200% 100%;
+            animation: loadingProgress 3s ease-out forwards, progressGlow 2s ease-in-out infinite;
+            border-radius: 10px;
+            position: relative;
         }
 
-        @keyframes loading {
+        .loading-progress::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            animation: progressShimmer 1.5s ease-in-out infinite;
+        }
+
+        .loading-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .loading-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--accent-blue);
+            border-radius: 50%;
+            animation: particleFloat 4s linear infinite;
+            opacity: 0.7;
+            box-shadow: 0 0 10px var(--accent-blue);
+        }
+
+        .loading-orbs {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            z-index: 1;
+        }
+
+        .loading-orb {
+            position: absolute;
+            border-radius: 50%;
+            animation: orbRotate 8s linear infinite;
+        }
+
+        .loading-orb:nth-child(1) {
+            width: 20px;
+            height: 20px;
+            background: var(--accent-blue);
+            box-shadow: 0 0 20px var(--accent-blue);
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .loading-orb:nth-child(2) {
+            width: 16px;
+            height: 16px;
+            background: var(--accent-purple);
+            box-shadow: 0 0 16px var(--accent-purple);
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+            animation-delay: -2s;
+        }
+
+        .loading-orb:nth-child(3) {
+            width: 18px;
+            height: 18px;
+            background: var(--gold);
+            box-shadow: 0 0 18px var(--gold);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            animation-delay: -4s;
+        }
+
+        .loading-orb:nth-child(4) {
+            width: 14px;
+            height: 14px;
+            background: var(--accent-blue);
+            box-shadow: 0 0 14px var(--accent-blue);
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            animation-delay: -6s;
+        }
+
+        .loading-text {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 1rem;
+            animation: textPulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes morphixGlow {
+            0%, 100% { 
+                filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.4));
+                transform: scale(1);
+            }
+            50% { 
+                filter: drop-shadow(0 0 30px rgba(0, 212, 255, 0.8)) drop-shadow(0 0 40px rgba(255, 215, 0, 0.6));
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0.8; transform: translateY(0px); }
+            100% { opacity: 1; transform: translateY(-5px); }
+        }
+
+        @keyframes loadingProgress {
             from { width: 0%; }
             to { width: 100%; }
+        }
+
+        @keyframes progressGlow {
+            0%, 100% { box-shadow: 0 0 10px rgba(0, 212, 255, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(0, 212, 255, 0.8), 0 0 30px rgba(255, 215, 0, 0.6); }
+        }
+
+        @keyframes progressShimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(200%); }
+        }
+
+        @keyframes particleFloat {
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-100px) translateX(200px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes orbRotate {
+            0% { transform: rotate(0deg) translateX(100px) rotate(0deg); }
+            100% { transform: rotate(360deg) translateX(100px) rotate(-360deg); }
+        }
+
+        @keyframes textPulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
         }
 
         /* Navigation */
@@ -1093,11 +1288,24 @@
 
     <!-- Loading Screen -->
     <div class="loading-screen" id="loadingScreen">
+        <!-- Loading Particles Background -->
+        <div class="loading-particles" id="loadingParticles"></div>
+        
+        <!-- Animated Orbs -->
+        <div class="loading-orbs">
+            <div class="loading-orb"></div>
+            <div class="loading-orb"></div>
+            <div class="loading-orb"></div>
+            <div class="loading-orb"></div>
+        </div>
+        
         <div class="loading-content">
-            <div class="loading-logo">PROJECT SHOWCASE</div>
-            <div class="loading-bar">
+            <div class="loading-logo">MORPHIX</div>
+            <div class="loading-subtitle">Real-World to Game 3D Modeling</div>
+            <div class="loading-bar-container">
                 <div class="loading-progress"></div>
             </div>
+            <div class="loading-text">Initializing 3D Scanning System...</div>
         </div>
     </div>
 
@@ -1137,7 +1345,7 @@
                     Transforming physical objects into interactive game elements through innovative low-cost 3D scanning technology. 
                     Bridge the gap between reality and virtual worlds with our revolutionary scanning system.
                 </p>
-                <a href="#about" class="cta-button">Explore Our Vision</a>
+                <a href="#model-viewer" class="cta-button">3D Viewer</a>
                 <div class="scroll-indicator">
                     <div class="scroll-text">Scroll to explore</div>
                     <div class="scroll-arrow"></div>
